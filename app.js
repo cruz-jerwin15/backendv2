@@ -2,6 +2,7 @@ import express from 'express'
 import { getStudent,getStudents,addStudent } from './back_end/database.js';
 import { addPenalty, getPenalties,updatePenalty } from './back_end/penalty.js';
 import { addGenre,getGenre,getGenres,updateStatusGenre } from './back_end/genre.js';
+import { addBook,getBooks } from './back_end/book.js';
 const app = express();
 
 app.use(express.json())
@@ -83,6 +84,18 @@ app.put("/genre-status/:id",async (req,res)=>{
     const results = await updateStatusGenre(req.body,id);
     res.send(results);
 })
+
+// Add book API
+app.post("/book",async (req,res)=>{
+    const results = await addBook(req.body);
+    res.status(201).send(results);
+})
+// get book API
+app.get("/book",async (req,res)=>{
+    const results = await getBooks();
+    res.send(results);
+})
+
 
 // Detect possible error
 app.use((err,req,res,next)=>{
